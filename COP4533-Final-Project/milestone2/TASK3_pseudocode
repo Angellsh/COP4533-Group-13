@@ -1,0 +1,32 @@
+function TASK3(stocks):  // stocks is a 2D array: m stocks, n days
+
+    m = length(stocks)
+    d = length(stocks[0])
+    
+    create 2D array opt[m][d], initialized to 0
+    stock_max = 0
+    min_opt = -1
+    best_stock = -1
+
+    for stock_index from 0 to m - 1:
+        min_ind = 0  // index of minimum price so far
+
+        for day_index from 1 to d - 1:
+            opt[stock_index][day_index] = MAX(
+                opt[stock_index][day_index - 1],
+                stocks[stock_index][day_index] - stocks[stock_index][min_ind]
+            )
+
+            if stocks[stock_index][day_index] < stocks[stock_index][min_ind]:
+                min_ind = day_index
+
+        if opt[stock_index][d - 1] > stock_max:
+            stock_max = opt[stock_index][d - 1]
+            best_stock = stock_index
+            min_opt = min_ind
+
+    for i from min_opt + 1 to d - 1:
+        if stocks[best_stock][i] - stocks[best_stock][min_opt] == stock_max:
+            return best_stock, min_opt, i, stock_max  // stock ID, buy day, sell day, profit
+
+    return 0, 0, 0, 0  // if no profit found
