@@ -4,6 +4,7 @@ from algorithm_task1 import algorithm1
 from algorithm_task3 import algorithm3
 from algorithm_task2 import algorithm2
 
+
 def generate_matrix(stocks, days, upper_cost, gaussian=False):
     matrix  = [[0 for i in range(days)] for j in range(stocks)]
 
@@ -42,7 +43,4 @@ if __name__ == '__main__':
 
     assert solution2==solution3==solution1
 
-
-
-#cases we need to account for
 
