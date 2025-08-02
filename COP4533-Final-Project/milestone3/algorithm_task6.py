@@ -7,7 +7,7 @@ Run time O(m*n^2) where m is the number of stocks and n is the number of days
 """
 
 def algorithm6(A, c):
-    # if the array is empty, or there are no stocks, or no days, return empty bracket []
+    # if the array is empty, or there are no stocks, or no days, return empty list []
     if not A or len(A) == 0 or len(A[0]) == 0:
         return []
 
@@ -15,41 +15,46 @@ def algorithm6(A, c):
     n = len(A[0]) 
     
     #if m == 0 or n == 0:
-     #   return []
+    #   return []
 
+    # store best profit up to the each day 
     dp = [0] * n
+    # store transactions that give best profit of day
     transactions = [None] * n 
 
-    # intialize results to store best transaciton sequence
+    # intialize results to store optimal transaction sequence
     results = []
-    # initialize current day to the last day
+    # initialize current day to the last day for backtracking 
     currDay = n - 1
-    
-    # need to explain this better    
+
+    # go through all buy and sell day pairs
     for j1 in range(0, n - 1):
         for j2 in range(j1 + 1, n):
+            # iterate through each stock
             for i in range(m):
-                # calculate profit 
+                # calculate profit sell day - buy day
                 profit = A[i][j2] - A[i][j1]
                 if profit < 0:
-                    continue # skip profit
-
-                prevDay = j1 - c - 1
+                    # skip transaction if there is no profit
+                    continue 
+                
+                # check for previous day after cool-down
+                prevDay = j1 - c -  1
                 if prevDay >= 0:
                     totalProfit = profit + dp[prevDay]
                 else:
                     totalProfit = profit
-                
+
+                # update best profit and store transaction
                 if totalProfit > dp[j2]:
                     dp[j2] = totalProfit
-                    # store the transaction
                     transactions[j2] = (i, j1, j2, prevDay)
 
     # Check skipped days with best profits 
     for skippedDays in range(1,n):
         if dp[skippedDays-1] > dp[skippedDays]:
             dp[skippedDays] = dp[skippedDays-1]
-            # only get transaction if current oone is none
+            # only get transaction if current one is none existent
             if transactions[skippedDays] is None:
                 transactions[skippedDays] = transactions[skippedDays-1]
 
