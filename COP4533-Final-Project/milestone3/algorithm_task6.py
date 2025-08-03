@@ -87,6 +87,8 @@ def emptyArray():
     expectedOutput = []
     if empty_result == expectedOutput:
         print("Test case 1 passed.")
+    else:
+        print(f"Test case 1 failed. Results:{empty_result}")
 
 # Base case for no available sell days
 
@@ -101,6 +103,8 @@ def noSellDays():
     expectedOutput = []
     if noSellDaysResults == expectedOutput:
         print("Test case 2 passed.")
+    else:
+        print(f"Test case 2 failed. Results: {noSellDaysResults}")
 
 # Problem Statement 3 Example from Final Project Project Description page 4
 
